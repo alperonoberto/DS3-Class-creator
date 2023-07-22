@@ -1,81 +1,198 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/Layout.astro";
+import { Clases } from "../data/ds3_classes";
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout title="Creador de personaje">
+  <div class="flex flex-1 flex-col w-full">
+    <header class="flex gap-2 align-middle p-4 bg-gray-950 text-white">
+      <svg
+        class="w-10 h-10 text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 18"
+      >
+        <path
+          d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm-1.391 7.361.707-3.535a3 3 0 0 1 .82-1.533L7.929 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h4.259a2.975 2.975 0 0 1-.15-1.639ZM8.05 17.95a1 1 0 0 1-.981-1.2l.708-3.536a1 1 0 0 1 .274-.511l6.363-6.364a3.007 3.007 0 0 1 4.243 0 3.007 3.007 0 0 1 0 4.243l-6.365 6.363a1 1 0 0 1-.511.274l-3.536.708a1.07 1.07 0 0 1-.195.023Z"
+        ></path>
+      </svg>
+      <h1 class="text-4xl">Crear personaje</h1>
+    </header>
+    <main class="grid grid-cols-4 bg-gray-700">
+      <form class="p-4 w-4/5 col-span-2">
+        <h1 class="text-3xl text-gray-200">Información</h1>
+        <div>
+          <label
+            for="first_name"
+            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            id="first_name"
+            class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="sexos"
+            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            >Sexo</label
+          >
+          <select
+            id="sexos"
+            class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+        </div>
+        <div>
+          <label
+            for="first_name"
+            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            >Edad</label
+          >
+          <input
+            type="number"
+            id="first_name"
+            class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="clases"
+            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            >Clase</label
+          >
+          <select
+            id="clases"
+            class="bg-gray-50 border border-gray-300 text-gray-900 mb-5 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            {
+              Clases.map((clase) => {
+                return (
+                  <option
+                    value={clase.nombre}
+                    id={clase.id.toString()}
+                    class="capitalize"
+                  >
+                    {clase.nombre.replace(/^\w/, (c) => c.toUpperCase())}
+                  </option>
+                );
+              })
+            }
+          </select>
+        </div>
+        <button
+          type="button"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+          >Crear personaje</button
+        >
+      </form>
+
+      <div class="bg-gray-800 grid col-span-1 justify-center">
+        <h1 class="text-3xl text-center text-gray-200 mt-5">Atributos</h1>
+        <table
+          id="atributos"
+          class="text-gray-200 text-center text-xl w-60 mb-5"
+        >
+        </table>
+      </div>
+
+      <div class="bg-gray-900 grid place-content-center col-span-1">
+        <h1 id="title" class="text-gray-200 text-3xl text-center capitalize">
+          Caballero
+        </h1>
+        <img
+          src="../../public/assets/classes/caballero.png"
+          alt=""
+          id="preview_image"
+        />
+      </div>
+    </main>
+  </div>
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+  select,
+  option {
+    cursor: pointer;
+  }
 </style>
+
+<script>
+  import { Clases } from "../data/ds3_classes";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const title = document.getElementById("title");
+    const select = document.getElementById("clases");
+    const imagen = document.getElementById("preview_image");
+    const atributos = document.getElementById("atributos");
+
+    for (let att in Clases[0]) {
+      if (att !== "id" && att !== "nombre") {
+        let tr = document.createElement("tr");
+        let tdicon = document.createElement("td");
+        let icon = document.createElement("img");
+        icon.setAttribute("src", `../../assets/attributes/${att}.jpg`);
+        tdicon.append(icon);
+        let td1 = document.createElement("td");
+        td1.textContent = `${att}`;
+        let td2 = document.createElement("td");
+        td2.textContent = `${Clases[0][att]}`;
+
+        // tr.className = "flex align-middle";
+        // td1.setAttribute("style", 'margin-right: 50%');
+        // td2.className = "text-center"
+
+        tr.append(tdicon);
+        tr.append(td1);
+        tr.append(td2);
+        atributos.append(tr);
+      }
+    }
+
+    // Agregar un evento al cambio del select
+    select?.addEventListener("change", function () {
+      const valorSeleccionado = select.value;
+      title.textContent = valorSeleccionado;
+      imagen.setAttribute(
+        "src",
+        `../../public/assets/classes/${valorSeleccionado}.png`
+      );
+
+      atributos.innerHTML = "";
+
+      for (let clase of Clases) {
+        if (clase.nombre == valorSeleccionado) {
+          for (let att in clase) {
+            if (att !== "id" && att !== "nombre") {
+              let tr = document.createElement("tr");
+              let tdicon = document.createElement("td");
+              let icon = document.createElement("img");
+              icon.setAttribute("src", `../../assets/attributes/${att}.jpg`);
+              tdicon.append(icon);
+              let td1 = document.createElement("td");
+              td1.textContent = `${att}`;
+              let td2 = document.createElement("td");
+              td2.textContent = `${clase[att]}`;
+
+              // tr.className = "flex align-middle";
+              // td1.setAttribute("style", 'margin-right: 50%');
+              // td2.className = "text-center"
+
+              tr.append(tdicon);
+              tr.append(td1);
+              tr.append(td2);
+              atributos.append(tr);
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
