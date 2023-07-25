@@ -4,7 +4,7 @@ import { Clases } from "../data/ds3_classes";
 ---
 
 <Layout title="Creador de personaje">
-  <div class="flex flex-1 flex-col w-full">
+  <div class="flex flex-1 flex-col w-full h-full">
     <header class="flex gap-2 align-middle p-4 bg-gray-950 text-white">
       <svg
         class="w-10 h-10 text-white"
@@ -19,17 +19,18 @@ import { Clases } from "../data/ds3_classes";
       </svg>
       <h1 class="text-4xl">Crear personaje</h1>
     </header>
-    <main class="grid grid-cols-4 bg-gray-700">
-      <form class="p-4 w-4/5 col-span-2">
+    <main class="grid grid-cols-4 bg-gray-700 h-full">
+      <form class="p-4 col-span-2" onsubmit="crearPersonaje(e)">
         <h1 class="text-3xl text-gray-200">Información</h1>
         <div>
           <label
             for="first_name"
-            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            class="text-right block mb-2 text-xl font-medium text-gray-200 dark:text-white"
             >Nombre</label
           >
           <input
             type="text"
+            placeholder="Jose Luis"
             id="first_name"
             class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
@@ -38,7 +39,7 @@ import { Clases } from "../data/ds3_classes";
         <div>
           <label
             for="sexos"
-            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            class="text-right block mb-2 text-xl font-medium text-gray-200 dark:text-white"
             >Sexo</label
           >
           <select
@@ -51,13 +52,16 @@ import { Clases } from "../data/ds3_classes";
         </div>
         <div>
           <label
-            for="first_name"
-            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            for="age"
+            class="text-right block mb-2 text-xl font-medium text-gray-200 dark:text-white"
             >Edad</label
           >
           <input
             type="number"
-            id="first_name"
+            id="age"
+            placeholder="0"
+            min="1"
+            pattern="^[0-9]+"
             class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           />
@@ -65,7 +69,7 @@ import { Clases } from "../data/ds3_classes";
         <div>
           <label
             for="clases"
-            class="block mb-2 text-xl font-medium text-gray-200 dark:text-white"
+            class="text-right block mb-2 text-xl font-medium text-gray-200 dark:text-white"
             >Clase</label
           >
           <select
@@ -88,23 +92,25 @@ import { Clases } from "../data/ds3_classes";
           </select>
         </div>
         <button
-          type="button"
-          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-          >Crear personaje</button
+          type="submit"
+          class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 w-full py-2.5 mt-5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+          >
+            <span class="text-xl">Crear</span>
+          </button
         >
       </form>
 
-      <div class="bg-gray-800 grid col-span-1 justify-center">
+      <div class="bg-gray-800 flex flex-col gap-10" style="align-items: center;">
         <h1 class="text-3xl text-center text-gray-200 mt-5">Atributos</h1>
         <table
           id="atributos"
-          class="text-gray-200 text-center text-xl w-60 mb-5"
+          class="text-gray-200 text-center text-2xl w-60"
         >
         </table>
       </div>
 
-      <div class="bg-gray-900 grid place-content-center col-span-1">
-        <h1 id="title" class="text-gray-200 text-3xl text-center capitalize">
+      <div class="bg-gray-900 flex flex-col gap-5" id="prev_container">
+        <h1 id="title" class="text-gray-200 text-3xl text-center capitalize mt-5">
           Caballero
         </h1>
         <img
@@ -118,14 +124,39 @@ import { Clases } from "../data/ds3_classes";
 </Layout>
 
 <style>
+  form {
+    width: 80%;
+    display: block;
+    margin: 1.25rem auto;
+  }
   select,
   option {
     cursor: pointer;
+  }
+  #preview_image {
+    width: 25rem;
+    aspect-ratio: 250/380;
+  }
+  #prev_container {
+    align-items: center;
+  }
+  table {
+    height: 70%;
   }
 </style>
 
 <script>
   import { Clases } from "../data/ds3_classes";
+
+  const name = document.querySelector('.name');
+  const age = document.querySelector('.age');
+  const btn = document.querySelector('.alert');
+  const form = document.getElementsByTagName('form');
+
+  function crearPersonaje(e: Event) {
+    e.preventDefault();
+    alert('Personaje creado con éxito.');
+  }
 
   document.addEventListener("DOMContentLoaded", function () {
     const title = document.getElementById("title");
@@ -138,16 +169,13 @@ import { Clases } from "../data/ds3_classes";
         let tr = document.createElement("tr");
         let tdicon = document.createElement("td");
         let icon = document.createElement("img");
+        icon.className = "w-10";
         icon.setAttribute("src", `../../assets/attributes/${att}.jpg`);
         tdicon.append(icon);
         let td1 = document.createElement("td");
         td1.textContent = `${att}`;
         let td2 = document.createElement("td");
         td2.textContent = `${Clases[0][att]}`;
-
-        // tr.className = "flex align-middle";
-        // td1.setAttribute("style", 'margin-right: 50%');
-        // td2.className = "text-center"
 
         tr.append(tdicon);
         tr.append(td1);
@@ -175,15 +203,12 @@ import { Clases } from "../data/ds3_classes";
               let tdicon = document.createElement("td");
               let icon = document.createElement("img");
               icon.setAttribute("src", `../../assets/attributes/${att}.jpg`);
+              icon.className = "w-10";
               tdicon.append(icon);
               let td1 = document.createElement("td");
               td1.textContent = `${att}`;
               let td2 = document.createElement("td");
               td2.textContent = `${clase[att]}`;
-
-              // tr.className = "flex align-middle";
-              // td1.setAttribute("style", 'margin-right: 50%');
-              // td2.className = "text-center"
 
               tr.append(tdicon);
               tr.append(td1);
